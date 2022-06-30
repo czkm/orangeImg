@@ -1,0 +1,4 @@
+node_modules/**
+src/assets/**/*.js
+src/components/**/*
+src/usb-key/lib/**
