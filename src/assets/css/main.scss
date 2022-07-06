@@ -89,3 +89,7 @@ input,
 select:not(:valid) {
     color: #999;
 }
+.transition{
+    transition: all 0.25s;
+
+}

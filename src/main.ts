@@ -1,9 +1,12 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 import store from './store';
-import naive from 'naive-ui'
+import naive from 'naive-ui';
 import router from '@/router';
-
+import './assets/css/var.scss'
+import './assets/css/reset.scss'
+import './assets/css/main.scss'
+import './assets/css/fancybox.css'
 // import {
 //     // create naive ui
 //     create,
@@ -14,16 +17,15 @@ import router from '@/router';
 //     components: [NButton]
 // })
 // 通用字体
-import 'vfonts/Lato.css'
+import 'vfonts/Lato.css';
 // 等宽字体
-import 'vfonts/FiraCode.css'
+import 'vfonts/FiraCode.css';
 // 创建vue实例
 const app = createApp(App);
 
 app.use(store);
+app.use(router);
 app.use(naive);
-app.use(router)
-
 
 // 挂载实例
 app.mount('#app');

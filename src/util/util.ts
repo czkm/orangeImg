@@ -102,11 +102,11 @@ function CopyText() {
         clipboard.destroy();
     });
 }
-
-function FormatZhByMessage(text: string) {
+//
+function FormatErrorMessage(text: string) {
     switch (true) {
         case text == 'Bad credentials': {
-            return 'access token 错误';
+            return 'access token 错误,再好好看看';
         }
         case text.indexOf("wasn't supplied") >= 0: {
             return '请勿重复上传相同内容';
@@ -118,7 +118,7 @@ function FormatZhByMessage(text: string) {
             return '名称不能为空';
         }
         case text == 'Requires authentication': {
-            return 'access token 错误';
+            return 'access token 错误,再好好看看';
         }
         default:
             return '未知错误';
@@ -132,5 +132,5 @@ export {
     // GetDate,
     GetFileSize,
     CopyText,
-    FormatZhByMessage,
+    FormatErrorMessage,
 };

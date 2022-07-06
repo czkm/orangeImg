@@ -1,6 +1,6 @@
-import xwlRequest from './index'
-const xwlRequests = new xwlRequest({
+import Request from './index'
+const Requests = new Request({
   baseURL: 'https://api.github.com',
   timeout: 30000,
 })
-export default xwlRequests
+export default Requests

@@ -1,25 +1,15 @@
 <script setup lang="ts">
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-import HelloWorld from './components/HelloWorld.vue';
-import UsePinia from '@/components/usePinia.vue';
+import Index from '@/view/index.vue';
+import Message from './components/Message.vue';
+import { NMessageProvider } from "naive-ui";
+
 </script>
 
 <template>
-    <RouterView/>
-
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
-    <use-pinia></use-pinia>
+    <n-message-provider>
+        <Message />
+    </n-message-provider>
+    <index />
 </template>
 
-<style>
-#app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    margin-top: 60px;
-}
-</style>
+<style></style>
