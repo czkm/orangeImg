@@ -1,7 +1,6 @@
 // import Moment from 'moment'
-import axios from 'axios';
+// import axios from 'axios';
 import Clipboard from 'clipboard';
-import { Alert } from './alert';
 
 /**
  * 人性化时间处理 传入国际时间格式
@@ -46,17 +45,17 @@ function GetFileExt(filename: string) {
  * @param {}
  */
 function GetNowTimeNum() {
-    var nowTime: Date = new Date();
-    var year: number = nowTime.getFullYear();
-    var month: number = nowTime.getMonth() + 1;
-    var day: number = nowTime.getDate();
-    var hour: number = nowTime.getHours();
-    var minutes: number = nowTime.getMinutes();
-    var seconds: number = nowTime.getSeconds();
+    const nowTime: Date = new Date();
+    const year: number = nowTime.getFullYear();
+    const month: number = nowTime.getMonth() + 1;
+    const day: number = nowTime.getDate();
+    const hour: number = nowTime.getHours();
+    const minutes: number = nowTime.getMinutes();
+    const seconds: number = nowTime.getSeconds();
 
-    var hourStr: string = '';
-    var minutesStr: string = '';
-    var secondsStr: string = '';
+    let hourStr: string = '';
+    let minutesStr: string = '';
+    let secondsStr: string = '';
 
     if (hour <= 9) {
         hourStr = '0' + hour.toString();
@@ -73,7 +72,7 @@ function GetNowTimeNum() {
 function GetFileSize(size: number) {
     //把字节转换成正常文件大小
     if (!size) return '';
-    var num = 1024.0; //byte
+    const num = 1024.0; //byte
     if (size < num) return size + ' b';
     if (size < Math.pow(num, 2)) return (size / num).toFixed(2) + ' KB'; //kb
     if (size < Math.pow(num, 3))
@@ -84,21 +83,15 @@ function GetFileSize(size: number) {
 }
 
 function CopyText() {
-    var clipboard = new Clipboard('.copy-btn');
+    const clipboard = new Clipboard('.copy-btn');
     clipboard.on('success', (e: any) => {
         // 复制成功消息通知
-        Alert({
-            type: 'success',
-            text: '复制成功！',
-        });
+        window.$message.success('复制成功');
         clipboard.destroy();
     });
     clipboard.on('error', (e: any) => {
         // 复制失败消息通知
-        Alert({
-            type: 'danger',
-            text: '复制失败！',
-        });
+        window.$message.error('复制失败');
         clipboard.destroy();
     });
 }
@@ -124,9 +117,18 @@ function FormatErrorMessage(text: string) {
             return '未知错误';
     }
 }
+function GetDefData(infoStore: any) {
+    const tokenValue = localStorage.getItem('github_token') as any;
+    const userInfo = JSON.parse(localStorage.getItem('userInfo') as string);
+    const repos = JSON.parse(localStorage.getItem('repos') as string);
+    infoStore.updateInfo(userInfo);
+    infoStore.updateToken(tokenValue);
+    infoStore.updateRepos(repos);
+}
 
 export {
     // GetBeautifyTime,
+    GetDefData,
     GetFileExt,
     GetNowTimeNum,
     // GetDate,

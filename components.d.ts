@@ -7,11 +7,15 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     Message: typeof import('./src/components/Message.vue')['default']
+    NA: typeof import('naive-ui')['NA']
     NAvatar: typeof import('naive-ui')['NAvatar']
     NButton: typeof import('naive-ui')['NButton']
+    NCard: typeof import('naive-ui')['NCard']
     NDescriptions: typeof import('naive-ui')['NDescriptions']
     NDescriptionsItem: typeof import('naive-ui')['NDescriptionsItem']
+    NDivider: typeof import('naive-ui')['NDivider']
     NDropdown: typeof import('naive-ui')['NDropdown']
+    NEllipsis: typeof import('naive-ui')['NEllipsis']
     NForm: typeof import('naive-ui')['NForm']
     NFormItem: typeof import('naive-ui')['NFormItem']
     NIcon: typeof import('naive-ui')['NIcon']
@@ -19,13 +23,15 @@ declare module '@vue/runtime-core' {
     NLayout: typeof import('naive-ui')['NLayout']
     NLayoutHeader: typeof import('naive-ui')['NLayoutHeader']
     NLayoutSider: typeof import('naive-ui')['NLayoutSider']
+    NScrollbar: typeof import('naive-ui')['NScrollbar']
     NSelect: typeof import('naive-ui')['NSelect']
     NSpace: typeof import('naive-ui')['NSpace']
     NSpin: typeof import('naive-ui')['NSpin']
+    NTag: typeof import('naive-ui')['NTag']
+    NText: typeof import('naive-ui')['NText']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     UploadModal: typeof import('./src/components/uploadModal.vue')['default']
-    UsePinia: typeof import('./src/components/usePinia.vue')['default']
   }
 }
 
