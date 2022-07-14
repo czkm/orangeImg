@@ -1,5 +1,6 @@
 // import Moment from 'moment'
 // import axios from 'axios';
+// @ts-ignore
 import Clipboard from 'clipboard';
 
 /**

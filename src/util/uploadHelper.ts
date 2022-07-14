@@ -31,7 +31,7 @@ const uploadHelper = (file: any, folder: string) => {
             });
         });
 
-        const compressFile = await CompressorFile;
+        const compressFile = await CompressorFile as File;
         const base64File: any = await fileByBase64(compressFile);
         const original_base64: any = await fileByBase64(file);
 
@@ -41,7 +41,7 @@ const uploadHelper = (file: any, folder: string) => {
                 file.name.lastIndexOf('.'),
             )}_${createHash(6)}`,
             original_size: file.size,
-            compress_size: compressFile.size,
+            compress_size: compressFile.size||0,
             base64data: base64File.replace(/^data:image\/\w+;base64,/, ''),
             base64: base64File,
             original_base64data: original_base64.replace(

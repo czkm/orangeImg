@@ -276,7 +276,7 @@ onMounted(() => {
 });
 
 // 拖拽上传
-const DropUpload = (e: Event) => {
+const DropUpload = (e: any) => {
     if (!folder.value) {
         window.$message.error('请选择文件夹');
         return;
@@ -299,7 +299,7 @@ const DropUpload = (e: Event) => {
 };
 
 // 监听粘贴操作
-const PasteUpload = (e: Event) => {
+const PasteUpload = (e: any) => {
     if (!folder.value) {
         window.$message.error('请选择文件夹');
         return;

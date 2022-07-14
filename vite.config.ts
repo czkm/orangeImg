@@ -18,7 +18,7 @@ export default defineConfig({
             resolvers: [NaiveUiResolver()],
         }),
     ],
-
+    base: '/orangeImg/',
     server: {
         port: 8088, //启动端口
         hmr: {

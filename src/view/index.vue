@@ -3,7 +3,7 @@
         <n-layout position="absolute">
             <n-layout-header class="layout_header" bordered>
                 <div class="orange_icon">
-                    <img src="src/assets/logo.png" alt="logo" />
+                    <img src="../assets/logo.png" alt="logo" />
                 </div>
                 <!--                <div class="user_icon">-->
                 <!--                    <n-dropdown-->

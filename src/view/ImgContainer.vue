@@ -40,14 +40,14 @@
                         <n-tag
                             class="copy-btn"
                             v-bind:data-clipboard-text="
-                                GetMarkdownText(item.cdn_url)
+                                GetMarkdownText(item.cdn_url||'')
                             "
                             @click="CopyText()"
                             >markdown</n-tag
                         ><n-tag
                             class="copy-btn"
                             v-bind:data-clipboard-text="
-                                GetCdnText(item.cdn_url)
+                                GetCdnText(item.cdn_url||'')
                             "
                             @click="CopyText()"
                             >cdn</n-tag
