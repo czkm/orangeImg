@@ -54,7 +54,7 @@
                 </n-tag>
                 <n-descriptions label-placement="top" v-show="!!description">
                     <n-descriptions-item>
-                        <template #label> 项目描述 </template>
+                        <template > 项目描述 </template>
                         {{ description }}
                     </n-descriptions-item>
                 </n-descriptions>
@@ -105,11 +105,10 @@ import { TimerOutline, Help, CheckmarkOutline } from '@vicons/ionicons5';
 import { useInfoStore } from '@/store/info';
 import { GetDefData } from '@/util/util';
 
-const formRef = ref(null);
 let confirm_loading = ref(false);
 let select_loading = ref(false);
 const infoStore = useInfoStore();
-const demoTokenValue = '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';
+const demoTokenValue = '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';
 const demoRepoId = 510652790;
 const getAccessBlogUrl = 'https://zhuanlan.zhihu.com/p/541405087';
 const settingForm = ref({
@@ -124,7 +123,6 @@ let userInfo = ref({
     name: '',
     avatar_url: '',
 } as userInfoInterface);
-let userToken = ref('' as any);
 const settingFormTitle = {
     tokenLabel: 'Github access token',
     reposLabel: 'Github 仓库',

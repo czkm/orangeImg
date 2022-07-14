@@ -8,7 +8,7 @@
         <n-icon size="20" class="icon-close">
             <close @click="emit('Close')" />
         </n-icon>
-        <n-select v-model:value="folder" :options="props.folders" />
+        <n-select style="margin-top:10px" v-model:value="folder" :options="props.folders" />
 
         <div class="upload-list">
             <label
@@ -343,9 +343,10 @@ const AddImageToList = async (files: uploadImgItemInterface[]) => {
             return uploadHelper(e, folder.value);
         }),
     );
-    window.$message.success('图片转码成功');
     add_upload_loading.value = false;
     upload_list.value = upload_list.value.concat(upload_files);
+    window.$message.success('图片转码成功');
+
 };
 
 // 上传到github
@@ -407,7 +408,6 @@ const Upload = async (type: ImgUploadTypeEnum) => {
 
     window.$message.success('上传完成');
     loadingObj[type].value = false;
-    console.log(upload_list);
     upload_list.value = upload_list.value.filter(
         (e) => e.status !== ImgUploadStatusEnum.SUCCESS,
     );

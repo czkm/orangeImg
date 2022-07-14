@@ -5,17 +5,6 @@
                 <div class="orange_icon">
                     <img src="../assets/logo.png" alt="logo" />
                 </div>
-                <!--                <div class="user_icon">-->
-                <!--                    <n-dropdown-->
-                <!--                        trigger="hover"-->
-                <!--                        :options="userOptions"-->
-                <!--                        @select="handleSelect"-->
-                <!--                    >-->
-                <!--                        <n-icon size="20">-->
-                <!--                            <person-outline />-->
-                <!--                        </n-icon>-->
-                <!--                    </n-dropdown>-->
-                <!--                </div>-->
             </n-layout-header>
             <n-layout has-sider position="absolute" class="layout_contain">
                 <n-layout-sider
@@ -123,7 +112,7 @@
                     <div
                         class="upload_imgList transition"
                         :style="
-                            isOpenImageModal
+                            infoStore.getModelType()
                                 ? `width:calc(100% - 500px);margin-left:500px`
                                 : `width:calc(100%)`
                         "
@@ -135,7 +124,7 @@
         </n-layout>
         <upload-modal
             @OpenUploadModel="changeImageModel"
-            :isOpen="isOpenImageModal"
+            :isOpen="infoStore.getModelType()"
             :folders="folders"
             @Close="changeImageModel"
         ></upload-modal>
@@ -144,13 +133,20 @@
 <script setup lang="ts">
 import UploadModal from '@/components/uploadModal.vue';
 import { PersonOutline, Close } from '@vicons/ionicons5';
-import { computed, defineComponent, onMounted, reactive, ref } from 'vue';
-import { UserOptionStrEnum } from '@/constant';
+import {
+    computed,
+    defineComponent,
+    onMounted,
+    reactive,
+    ref,
+    toRaw,
+} from 'vue';
+import { reposImgInterface, UserOptionStrEnum } from '@/constant';
 import router from '@/router';
 import { useInfoStore } from '@/store/info';
 import axios from '../axios/http';
 import { useRoute } from 'vue-router';
-import { GetDefData } from '@/util/util';
+import { GetDefData, isEmptyObj } from '@/util/util';
 const route = useRoute();
 
 const infoStore = useInfoStore();
@@ -163,7 +159,6 @@ infoStore.$subscribe((mutation: any, state) => {
     }
 });
 onMounted(() => {
-    // console.log('infoStore',infoStore)
     if (infoStore.repos && infoStore.userInfo) {
         GetDefData(infoStore);
     }
@@ -191,7 +186,6 @@ const activeFolder = (item: any, index: number) => {
     router.push(`/folder/${item.name}`);
 };
 const getFolders = () => {
-    console.log('getFolders');
     scroll_loading.value = true;
     axios
         .get({
@@ -200,11 +194,14 @@ const getFolders = () => {
             }/contents?t=${new Date().getTime()}`,
         })
         .then((res: any) => {
-            console.log(res);
             // 过滤所有文件夹
             folders.value = res.data.filter((item: any) => item.type == 'dir');
+            folders.value = folders.value.map((item: reposImgInterface) => ({
+                ...item,
+                label: item.name,
+                value: item.name,
+            }));
             infoStore.updateFolderList(folders.value);
-            // folders.value = res.data.filter((e) => e.type == 'dir')
             if (route.path == '/' && !route.params.name) {
                 router.push(`/folder/${folders.value[0].name}`);
             }
@@ -214,9 +211,17 @@ const getFolders = () => {
         });
 };
 const openFolderForm = () => {
+    if (isEmptyObj(infoStore.userInfo) || isEmptyObj(infoStore.repos)) {
+        window.$message.error('请先选择一个仓库');
+        return;
+    }
     isAddModal.value = true;
 };
 const addFolder = () => {
+    if (folderName.value === '') {
+        window.$message.error('请输入文件夹名称');
+        return;
+    }
     addFolder_loading.value = true;
     axios
         .put({
@@ -233,22 +238,21 @@ const addFolder = () => {
             getFolders();
         })
         .finally(() => {
-            addFolder_loading.value = true;
+            addFolder_loading.value = false;
         });
 };
-const handleSelect = (key: string | number) => {
-    console.log(key);
-};
+
 const toSetting = () => {
     router.push('/setting');
 };
 const changeImageModel = () => {
-    console.log('in');
-    if (!infoStore.repos.id) {
+    if (isEmptyObj(infoStore.repos)) {
         window.$message.error('请先完成配置信息');
         return;
     }
-    isOpenImageModal.value = !isOpenImageModal.value;
+
+    // isOpenImageModal.value = !isOpenImageModal.value;
+    infoStore.updateModelType(!infoStore.updateModelType);
 };
 
 const data = reactive({

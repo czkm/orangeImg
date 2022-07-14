@@ -136,9 +136,14 @@ const GetCdnText = (url: string) => {
     return ` ${url}`;
 };
 
+const isEmptyObj = (obj:Object)=>{
+    return JSON.stringify(obj)==='{}'
+
+}
 export {
     GetMarkdownText,
     GetCdnText,
+    isEmptyObj,
     // GetBeautifyTime,
     GetDefData,
     GetFileExt,

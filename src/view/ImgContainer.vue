@@ -7,7 +7,7 @@
             <!--/*            <div style="margin-top: 10px">*/-->
             <n-space vertical>
                 <n-button
-                    @click="emit('OpenUploadModel')"
+                    @click="OpenUploadModel()"
                     type="primary"
                     style="width: 120px; margin: 10px auto"
                     >上传图片</n-button
@@ -75,7 +75,6 @@ import {
 } from '@/constant';
 import { GetCdnText, GetMarkdownText } from '@/util/util';
 
-const emit = defineEmits(['SetLoading', 'OpenUploadModel']);
 
 const route = useRoute();
 const router = useRouter();
@@ -100,7 +99,9 @@ onMounted(() => {
         router.push('/setting');
     }
 });
-
+const OpenUploadModel= ()=>{
+    infoStore.updateModelType(true)
+}
 const GetImages = (folderPath: string) => {
     imagesList_loading.value = true;
     axios
@@ -133,14 +134,6 @@ const isAssetTypeAnImage = (imgName: string) => {
     let arr = Object.values(ImgSuffixEnum) as string[];
     return arr.indexOf(ext.toLowerCase()) >= 0;
 };
-// const GetMarkdownText = (url: string) => {
-//     const alt = url.substring(url.lastIndexOf('/') + 1);
-//     return `![${alt}](${url})`;
-// };
-//
-// const GetCdnText = (url: string) => {
-//     return ` ${url}`;
-// };
 
 let deleteFolder_loading = ref(false);
 

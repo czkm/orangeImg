@@ -8,7 +8,8 @@ export const useInfoStore = defineStore({
             github_token: '',
             userInfo: {} as userInfoInterface,
             repos: {} as reposInterface,
-            folderList:[] as reposImgInterface[]
+            folderList:[] as reposImgInterface[],
+            modelType:false
         };
     },
     actions: {
@@ -24,5 +25,11 @@ export const useInfoStore = defineStore({
         updateFolderList(folderList: reposImgInterface[]) {
             this.folderList = folderList;
         },
+        updateModelType(type: boolean) {
+            this.modelType = type;
+        },
+        getModelType(){
+            return  this.modelType
+        }
     },
 });
