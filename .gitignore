@@ -1,14 +1,7 @@
 .DS_Store
 node_modules
 /dist
-/sso-dist
-vue.config.js
-/src/login.ts
-pam-webcli-app.tar
-pam-webcli-app
-/pam-sso
-pam-sso.tar
-
+vite.config.js
 # local env files
 .env.local
 .env.*.local
@@ -26,3 +19,5 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
+yarn.lock
+package-lock.json

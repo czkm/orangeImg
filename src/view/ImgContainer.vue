@@ -24,39 +24,37 @@
         </div>
 
         <div v-show="images.length > 0" class="list">
-            <n-spin :show="imagesList_loading">
-                <div v-for="item in images" :key="`${item.name}`" class="item">
-                    <div @click="DeleteImage(item)" class="del"></div>
-                    <a
-                        class="image"
-                        :data-info="FormatWImageInfo(item)"
-                        :href="item.cdn_url"
-                        data-fancybox="gallery"
-                    >
-                        <img :src="item.cdn_url" loading="lazy" alt=""
-                    /></a>
-                    <div class="info">
-                        <div class="name">{{ item.name }}</div>
-                        <div class="copy-box">
-                            <span
-                                class="copy-btn"
-                                v-bind:data-clipboard-text="
-                                    GetMarkdownText(item.cdn_url)
-                                "
-                                @click="CopyText()"
-                                >markdown</span
-                            ><span
-                                class="copy-btn"
-                                v-bind:data-clipboard-text="
-                                    GetCdnText(item.cdn_url)
-                                "
-                                @click="CopyText()"
-                                >cdn</span
-                            >
-                        </div>
+            <div v-for="item in images" :key="`${item.name}`" class="item">
+                <div @click="DeleteImage(item)" class="del"></div>
+                <a
+                    class="image"
+                    :data-info="FormatWImageInfo(item)"
+                    :href="item.cdn_url"
+                    data-fancybox="gallery"
+                >
+                    <img :src="item.cdn_url" loading="lazy" alt=""
+                /></a>
+                <div class="info">
+                    <div class="name">{{ item.name }}</div>
+                    <div class="copy-box">
+                        <n-tag
+                            class="copy-btn"
+                            v-bind:data-clipboard-text="
+                                GetMarkdownText(item.cdn_url)
+                            "
+                            @click="CopyText()"
+                            >markdown</n-tag
+                        ><n-tag
+                            class="copy-btn"
+                            v-bind:data-clipboard-text="
+                                GetCdnText(item.cdn_url)
+                            "
+                            @click="CopyText()"
+                            >cdn</n-tag
+                        >
                     </div>
                 </div>
-            </n-spin>
+            </div>
         </div>
         <div v-if="images.length > 0" class="footer">
             共 {{ images.length }} 张图
@@ -64,14 +62,18 @@
     </div>
 </template>
 <script setup lang="ts">
-import { GetFileSize, CopyText } from '../util/util';
-// import LewButton from '../components/base/LewButton.vue'
+import { GetFileSize, CopyText } from '@/util/util';
 
 import axios from '../axios/http';
 import { onMounted, watch, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useInfoStore } from '@/store/info';
-import { ImgSuffixEnum, reposImgInterface, UserOptionEnum } from '@/constant';
+import {
+    ImgSuffixEnum,
+    reposImgInterface,
+    UserOptionStrEnum,
+} from '@/constant';
+import { GetCdnText, GetMarkdownText } from '@/util/util';
 
 const emit = defineEmits(['SetLoading', 'OpenUploadModel']);
 
@@ -111,8 +113,8 @@ const GetImages = (folderPath: string) => {
             files.value = res.data;
             res.data.forEach((img: reposImgInterface) => {
                 if (img.download_url) {
-                    img.cdn_url = `https://cdn.jsdelivr.net/gh/${infoStore.userInfo.login}/${infoStore.repos.name}@master/${folderPath}/${img.name}`;
-                    // 非cdn    img.cdn_url = `https://git.poker/${infoStore.userInfo.login}/${infoStore.repos.name}/blob/main/${folderPath}/${img.name}?raw=true`;
+                    // img.cdn_url = `https://cdn.jsdelivr.net/gh/${infoStore.userInfo.login}/${infoStore.repos.name}@master/${folderPath}/${img.name}`;
+                    img.cdn_url = `https://git.poker/${infoStore.userInfo.login}/${infoStore.repos.name}/blob/main/${folderPath}/${img.name}?raw=true`;
                 }
             });
             images.value = res.data.filter((img: reposImgInterface) =>
@@ -131,14 +133,14 @@ const isAssetTypeAnImage = (imgName: string) => {
     let arr = Object.values(ImgSuffixEnum) as string[];
     return arr.indexOf(ext.toLowerCase()) >= 0;
 };
-const GetMarkdownText = (url: string) => {
-    const alt = url.substring(url.lastIndexOf('/') + 1);
-    return `![${alt}](${url})`;
-};
-
-const GetCdnText = (url: string) => {
-    return ` ${url}`;
-};
+// const GetMarkdownText = (url: string) => {
+//     const alt = url.substring(url.lastIndexOf('/') + 1);
+//     return `![${alt}](${url})`;
+// };
+//
+// const GetCdnText = (url: string) => {
+//     return ` ${url}`;
+// };
 
 let deleteFolder_loading = ref(false);
 
@@ -149,7 +151,7 @@ const DeleteFolder = () => {
             .delete({
                 url: `/repos/${infoStore.userInfo.login}/${infoStore.repos.name}/contents/${route.params.name}/init`,
                 data: {
-                    message: UserOptionEnum.DEL_FOLDER,
+                    message: UserOptionStrEnum.DEL_FOLDER,
                     sha: files.value[0]?.sha,
                 },
             })
@@ -172,7 +174,7 @@ const DeleteImage = (item: reposImgInterface) => {
         .delete({
             url: `/repos/${infoStore.userInfo.login}/${infoStore.repos.name}/contents/${route.params.name}/${item.name}`,
             data: {
-                message: UserOptionEnum.DEL_IMG,
+                message: UserOptionStrEnum.DEL_IMG,
                 sha: item.sha,
             },
         })
@@ -318,18 +320,19 @@ defineExpose({
                     height: 40px;
                     opacity: 0;
                     transition: all 0.1s;
-                    span {
-                        padding: 2px 6px;
-                        border-radius: 4px;
+                    .copy-btn {
+                        //padding: 2px 6px;
+                        //border-radius: 4px;
                         margin: 0px 3px;
-                        height: 20px;
-                        line-height: 20px;
-                        background: #18a058;
-                        color: #fff;
-                        border: var(--border-width) #18a058 solid;
+                        //height: 20px;
+                        //line-height: 20px;
+                        //background: #18a058;
+                        //color: #fff;
+                        //border: var(--border-width) #18a058 solid;
                     }
-                    span:hover {
-                        border: var(--border-width) #36ad6a solid;
+                    .copy-btn:hover {
+                        cursor: pointer;
+                        //border: var(--border-width) #36ad6a solid;
                         background: #36ad6a;
                         color: #fff;
                     }

@@ -119,14 +119,25 @@ function FormatErrorMessage(text: string) {
 }
 function GetDefData(infoStore: any) {
     const tokenValue = localStorage.getItem('github_token') as any;
-    const userInfo = JSON.parse(localStorage.getItem('userInfo') as string);
-    const repos = JSON.parse(localStorage.getItem('repos') as string);
+    const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
+    const repos = JSON.parse(localStorage.getItem('repos') || '{}');
     infoStore.updateInfo(userInfo);
     infoStore.updateToken(tokenValue);
     infoStore.updateRepos(repos);
 }
+// 获取Markdown
+const GetMarkdownText = (url: string) => {
+    const alt = url.substring(url.lastIndexOf('/') + 1);
+    return `![${alt}](${url})`;
+};
+// 获取cdn
+const GetCdnText = (url: string) => {
+    return ` ${url}`;
+};
 
 export {
+    GetMarkdownText,
+    GetCdnText,
     // GetBeautifyTime,
     GetDefData,
     GetFileExt,

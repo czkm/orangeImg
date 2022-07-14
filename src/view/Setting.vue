@@ -15,7 +15,7 @@
                     <n-descriptions-item>
                         <template #label>
                             <n-a
-                                href="https://baike.baidu.com/item/%E4%B8%94%E5%90%AC%E9%A3%8E%E5%90%9F"
+                                :href="getAccessBlogUrl"
                                 target="_blank"
                             >
                                 如何获取access token？
@@ -103,16 +103,15 @@ import axios from '../axios/http';
 import { computed, onMounted, ref, watch } from 'vue';
 import { TimerOutline, Help, CheckmarkOutline } from '@vicons/ionicons5';
 import { useInfoStore } from '@/store/info';
-import {GetDefData} from "@/util/util";
+import { GetDefData } from '@/util/util';
 
 const formRef = ref(null);
 let confirm_loading = ref(false);
 let select_loading = ref(false);
 const infoStore = useInfoStore();
-const demoTokenValue = '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';
+const demoTokenValue = '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';
 const demoRepoId = 510652790;
-const getAccessBlogUrl =
-    'https://www.google.com/search?q=nativeui+%E8%A1%A8%E5%8D%95%E6%8F%8F%E8%BF%B0&oq=&aqs=chrome.0.35i39i362l8.36723029j0j15&sourceid=chrome&ie=UTF-8';
+const getAccessBlogUrl = 'https://zhuanlan.zhihu.com/p/541405087';
 const settingForm = ref({
     tokenValue: '',
     repoId: ref(null),
@@ -144,9 +143,10 @@ watch(
 onMounted(() => {
     if (
         localStorage.getItem('github_token') &&
-        localStorage.getItem('userInfo')
+        localStorage.getItem('userInfo') &&
+        localStorage.getItem('repos')
     ) {
-        GetDefData(infoStore)
+        GetDefData(infoStore);
         settingForm.value.tokenValue = localStorage.getItem(
             'github_token',
         ) as any;
@@ -162,8 +162,8 @@ const getCurrentReposInfo = () => {
 
 const setTag = () => {
     const repos = getCurrentReposInfo();
-    tag_list.value = repos.topics || [];
-    description.value = repos.description || '';
+    tag_list.value = repos?.topics || [];
+    description.value = repos?.description || '';
 };
 const SetToken = () => {
     localStorage.setItem('github_token', settingForm.value.tokenValue);
@@ -217,9 +217,9 @@ const GetRepos = () => {
             }));
 
             const localRepos = JSON.parse(
-                localStorage.getItem('repos') as string,
+                localStorage.getItem('repos') || '{}',
             );
-            if (localRepos) {
+            if (localRepos.id) {
                 settingForm.value.repoId = localRepos.id;
                 Save(false);
             }
@@ -235,7 +235,7 @@ const Save = (showTips: boolean = true) => {
         return;
     } else {
         const repos = getCurrentReposInfo();
-        localStorage.setItem('repos', JSON.stringify(repos));
+        localStorage.setItem('repos', JSON.stringify(repos) || '{}');
         infoStore.updateRepos(repos);
     }
     if (showTips) {

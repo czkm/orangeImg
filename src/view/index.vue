@@ -5,22 +5,22 @@
                 <div class="orange_icon">
                     <img src="src/assets/logo.png" alt="logo" />
                 </div>
-                <div class="user_icon">
-                    <n-dropdown
-                        trigger="hover"
-                        :options="userOptions"
-                        @select="handleSelect"
-                    >
-                        <n-icon size="20">
-                            <person-outline />
-                        </n-icon>
-                    </n-dropdown>
-                </div>
+                <!--                <div class="user_icon">-->
+                <!--                    <n-dropdown-->
+                <!--                        trigger="hover"-->
+                <!--                        :options="userOptions"-->
+                <!--                        @select="handleSelect"-->
+                <!--                    >-->
+                <!--                        <n-icon size="20">-->
+                <!--                            <person-outline />-->
+                <!--                        </n-icon>-->
+                <!--                    </n-dropdown>-->
+                <!--                </div>-->
             </n-layout-header>
             <n-layout has-sider position="absolute" class="layout_contain">
                 <n-layout-sider
                     width="200"
-                    content-style=" padding: 16px 16px 0;overflow-y: hidden;"
+                    content-style=" padding: 16px 10px 0;overflow-y: hidden;"
                     bordered
                 >
                     <n-space vertical>
@@ -145,7 +145,7 @@
 import UploadModal from '@/components/uploadModal.vue';
 import { PersonOutline, Close } from '@vicons/ionicons5';
 import { computed, defineComponent, onMounted, reactive, ref } from 'vue';
-import { UserOptionEnum } from '@/constant';
+import { UserOptionStrEnum } from '@/constant';
 import router from '@/router';
 import { useInfoStore } from '@/store/info';
 import axios from '../axios/http';
@@ -153,30 +153,29 @@ import { useRoute } from 'vue-router';
 import { GetDefData } from '@/util/util';
 const route = useRoute();
 
-onMounted(() => {
-    GetDefData(infoStore);
-    console.log(route.params);
-
-    // console.log('infoStore',infoStore)
-    // if (infoStore.repos&&infoStore.) {
-    //     getFolders();
-    // }
-});
 const infoStore = useInfoStore();
 infoStore.$subscribe((mutation: any, state) => {
-    if (mutation.events.key === 'repos') {
+    if (mutation.events.key === 'repos' && state.repos.id) {
         getFolders();
     }
+    if (mutation.events.key === 'github_token') {
+        hasToken.value = state.github_token !== '';
+    }
 });
+onMounted(() => {
+    // console.log('infoStore',infoStore)
+    if (infoStore.repos && infoStore.userInfo) {
+        GetDefData(infoStore);
+    }
+});
+
 const userOptions = [
     {
         label: '个人信息',
-        key: UserOptionEnum.INFO,
+        key: UserOptionStrEnum.INFO,
     },
 ];
-const hasToken = computed(() => {
-    return infoStore.github_token !== '';
-});
+const hasToken = ref(false);
 let folders = ref([] as any);
 let isOpenImageModal = ref(false);
 let isAddModal = ref(false);
@@ -224,7 +223,7 @@ const addFolder = () => {
             url: `/repos/${infoStore.userInfo.login}/${infoStore.repos.name}/contents/${folderName.value}/init
 `,
             data: {
-                message: UserOptionEnum.ADD_FOLDER,
+                message: UserOptionStrEnum.ADD_FOLDER,
                 content: initFolderStr,
             },
         })
@@ -244,7 +243,7 @@ const toSetting = () => {
     router.push('/setting');
 };
 const changeImageModel = () => {
-    console.log('in')
+    console.log('in');
     if (!infoStore.repos.id) {
         window.$message.error('请先完成配置信息');
         return;
@@ -273,6 +272,8 @@ const data = reactive({
         .user_icon,
         .orange_icon {
             display: inline-block;
+            width: 30px;
+            height: 30px;
         }
         .orange_icon {
             width: 30px;
