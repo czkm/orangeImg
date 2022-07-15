@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
-import Index from '@/view/index.vue';
 import Setting from '@/view/Setting.vue';
 import ImgContainer from '@/view/ImgContainer.vue'
+import About from '@/view/about.vue'
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -22,12 +22,12 @@ const routes: Array<RouteRecordRaw> = [
         component: ImgContainer,
         meta: {},
     },
-    // {
-    //   path: '/About',
-    //   name: 'About',
-    //   component: About,
-    //   meta: {},
-    // },
+    {
+      path: '/About',
+      name: 'About',
+      component: About,
+      meta: {},
+    },
 ];
 const router = createRouter({
     history: createWebHashHistory(''),

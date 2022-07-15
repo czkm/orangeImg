@@ -8,7 +8,12 @@
         <n-icon size="20" class="icon-close">
             <close @click="emit('Close')" />
         </n-icon>
-        <n-select style="margin-top:10px" v-model:value="folder" :options="props.folders" />
+        <n-select
+            placeholder="请选择文件夹"
+            style="margin-top: 10px"
+            v-model:value="folder"
+            :options="props.folders"
+        />
 
         <div class="upload-list">
             <label
@@ -190,7 +195,7 @@ import {
     Reload,
 } from '@vicons/ionicons5';
 import { uploadHelper } from '@/util/uploadHelper';
-import { onMounted, watch, ref, computed } from 'vue';
+import { onMounted, watch, ref, computed, toRaw } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { GetFileSize, CopyText } from '@/util/util';
 import {
@@ -233,9 +238,7 @@ watch(
 watch(
     () => folder.value,
     (n: any) => {
-        if (route.path != '/setting') {
-            router.push(`/folder/${n}`);
-        }
+        router.push(`/folder/${n}`);
     },
 );
 const showUploadBtn = computed(() => {
@@ -346,7 +349,6 @@ const AddImageToList = async (files: uploadImgItemInterface[]) => {
     add_upload_loading.value = false;
     upload_list.value = upload_list.value.concat(upload_files);
     window.$message.success('图片转码成功');
-
 };
 
 // 上传到github
@@ -411,7 +413,8 @@ const Upload = async (type: ImgUploadTypeEnum) => {
     upload_list.value = upload_list.value.filter(
         (e) => e.status !== ImgUploadStatusEnum.SUCCESS,
     );
-    // router.push((route.fullPath += '/?time=' + new Date().getTime()));
+    const path = toRaw(route.fullPath) + '?time=' + new Date().getTime();
+    await router.push(path);
     localStorage.setItem('history_list', JSON.stringify(history_list.value));
 };
 

@@ -6,7 +6,8 @@
         "build": "vue-tsc --noEmit --skipLibCheck && vite build",
         "serve": "vite preview",
         "lint": "eslint src",
-        "lint:fix": "eslint src --fix --ext .ts,.tsx"
+        "lint:fix": "eslint src --fix --ext .ts,.tsx",
+        "deploy":"sh deploy.sh"
     },
     "dependencies": {
         "@vicons/ionicons5": "^0.12.0",

@@ -4,7 +4,6 @@
         <div v-show="images.length === 0" class="not-found">
             <div class="title">暂无图片</div>
             <div class="message">你可以点击左侧的上传图片按钮进行上传。</div>
-            <!--/*            <div style="margin-top: 10px">*/-->
             <n-space vertical>
                 <n-button
                     @click="OpenUploadModel()"
@@ -20,7 +19,6 @@
                     >删除文件夹</n-button
                 >
             </n-space>
-            <!--            </div>-->
         </div>
 
         <div v-show="images.length > 0" class="list">
@@ -40,14 +38,14 @@
                         <n-tag
                             class="copy-btn"
                             v-bind:data-clipboard-text="
-                                GetMarkdownText(item.cdn_url||'')
+                                GetMarkdownText(item.cdn_url || '')
                             "
                             @click="CopyText()"
                             >markdown</n-tag
                         ><n-tag
                             class="copy-btn"
                             v-bind:data-clipboard-text="
-                                GetCdnText(item.cdn_url||'')
+                                GetCdnText(item.cdn_url || '')
                             "
                             @click="CopyText()"
                             >cdn</n-tag
@@ -75,7 +73,6 @@ import {
 } from '@/constant';
 import { GetCdnText, GetMarkdownText } from '@/util/util';
 
-
 const route = useRoute();
 const router = useRouter();
 const infoStore = useInfoStore();
@@ -83,12 +80,15 @@ const infoStore = useInfoStore();
 watch(
     () => route.params.name,
     (folderName: any) => {
-        // if (n.folder) {
         GetImages(folderName);
-        // }
     },
 );
-
+watch(
+    () => route.query.time,
+    (n: any) => {
+        GetImages(route.params.name as string);
+    },
+);
 let images = ref([] as reposImgInterface[]);
 let files = ref([] as any);
 let imagesList_loading = ref(false);
@@ -99,9 +99,9 @@ onMounted(() => {
         router.push('/setting');
     }
 });
-const OpenUploadModel= ()=>{
-    infoStore.updateModelType(true)
-}
+const OpenUploadModel = () => {
+    infoStore.updateModelType(true);
+};
 const GetImages = (folderPath: string) => {
     imagesList_loading.value = true;
     axios

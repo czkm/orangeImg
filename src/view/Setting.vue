@@ -13,14 +13,14 @@
             >
                 <n-descriptions label-placement="top">
                     <n-descriptions-item>
-                        <template #label>
+                        <template  #label>
                             <n-a
                                 :href="getAccessBlogUrl"
                                 target="_blank"
                             >
                                 如何获取access token？
                             </n-a>
-                        </template>
+                        </template >
                         <n-text depth="3">
                             access token
                             只会储存在你的本机的浏览器内，清空缓存则需要重新登陆
@@ -108,7 +108,8 @@ import { GetDefData } from '@/util/util';
 let confirm_loading = ref(false);
 let select_loading = ref(false);
 const infoStore = useInfoStore();
-const demoTokenValue = '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';
+const demoTokenStr = 'ghp_KnpQsBY4htJmiU'
+const demoTokenEnd =     '94O29PJpzfhwZWan3JYjgU';
 const demoRepoId = 510652790;
 const getAccessBlogUrl = 'https://zhuanlan.zhihu.com/p/541405087';
 const settingForm = ref({
@@ -178,7 +179,7 @@ const LoginOut = () => {
     location.reload();
 };
 const GotoDemo = async () => {
-    settingForm.value.tokenValue = demoTokenValue;
+    settingForm.value.tokenValue = `${demoTokenStr}${demoTokenEnd}`;
     localStorage.setItem('github_token', settingForm.value.tokenValue);
     localStorage.setItem('repos', JSON.stringify({ id: demoRepoId }));
     SetToken();

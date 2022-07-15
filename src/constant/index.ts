@@ -79,9 +79,9 @@ export interface reposImgInterface {
 }
 
 // 上传图片
-export interface uploadImgItemInterface {
+export interface uploadImgItemInterface extends File{
     name: string; // 名称
-    size: string; // 大小
+    size: number; // 大小
     type: string; // 类型
     [props: string]: any;
 }

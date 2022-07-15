@@ -1,23 +1,7 @@
-// import Compress from '@yireen/squoosh-browser'
-// import {
-//   defaultPreprocessorState,
-//   defaultProcessorState,
-//   encoderMap,
-// } from '@yireen/squoosh-browser/dist/client/lazy-app/feature-meta'
 import Compressor from 'compressorjs';
 
-// type可选 mozJPEG / avi avf / webP
-const uploadHelper = (file: any, folder: string) => {
+const uploadHelper = (file: File, folder: string) => {
     return new Promise(async (resolve) => {
-        // const compress = new Compress(file, {
-        //   encoderState: {
-        //     type: 'mozJPEG',
-        //     options: encoderMap.mozJPEG.meta.defaultOptions,
-        //   },
-        //   processorState: defaultProcessorState,
-        //   preprocessorState: defaultPreprocessorState,
-        // })
-        // console.log(file)
         const CompressorFile = new Promise((resolve, reject) => {
             new Compressor(file, {
                 quality: 0.6,

@@ -1,5 +1,7 @@
 .DS_Store
 node_modules
+/dist
+
 vite.config.js
 # local env files
 .env.local

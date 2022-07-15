@@ -245,6 +245,9 @@ const addFolder = () => {
 const toSetting = () => {
     router.push('/setting');
 };
+const toAbout = () => {
+    router.push('/about');
+};
 const changeImageModel = () => {
     if (isEmptyObj(infoStore.repos)) {
         window.$message.error('请先完成配置信息');
@@ -252,7 +255,7 @@ const changeImageModel = () => {
     }
 
     // isOpenImageModal.value = !isOpenImageModal.value;
-    infoStore.updateModelType(!infoStore.updateModelType);
+    infoStore.updateModelType(!infoStore.getModelType());
 };
 
 const data = reactive({
@@ -260,6 +263,7 @@ const data = reactive({
         { title: '新建文件夹', func: openFolderForm },
         { title: '应用配置⚙️', func: toSetting },
         { title: '上传图片⏫', func: changeImageModel },
+        { title: '关于', func: toAbout },
     ],
 });
 </script>
