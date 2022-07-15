@@ -414,7 +414,7 @@ const Upload = async (type: ImgUploadTypeEnum) => {
         (e) => e.status !== ImgUploadStatusEnum.SUCCESS,
     );
     const path = toRaw(route.fullPath) + '?time=' + new Date().getTime();
-    await router.push(path);
+    router.push(path);
     localStorage.setItem('history_list', JSON.stringify(history_list.value));
 };
 

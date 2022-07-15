@@ -6,7 +6,6 @@ import router from '@/router';
 import './assets/css/var.scss'
 import './assets/css/reset.scss'
 import './assets/css/main.scss'
-// import './assets/css/fancybox.css'
 // 通用字体
 import 'vfonts/Lato.css';
 // 等宽字体
@@ -17,6 +16,12 @@ const app = createApp(App);
 app.use(store);
 app.use(router);
 app.use(naive);
-
+router.beforeEach((to, from,next) => {
+    if (to.fullPath === '/folder/') {
+        next(from.fullPath);
+    }else {
+        next()
+    }
+})
 // 挂载实例
 app.mount('#app');

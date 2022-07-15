@@ -1,4 +1,11 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import me from '../assets/me.jpeg'
+import vue from '../assets/vuelogo.png'
+import pinna from '../assets/pinalogo.svg'
+import vite from '../assets/vitelogo.svg'
+import navei from '../assets/naivelogo.svg'
+
+</script>
 
 <template>
     <div class="about-wrapper">
@@ -12,7 +19,7 @@
                     class="meAvatar"
                     round
                     size="large"
-                    src="../src/assets/me.jpeg"
+                    :src="me"
                 />
                 czkm</n-a
             >
@@ -38,7 +45,7 @@
                         <n-avatar
                             class="logo"
                             size="small"
-                            src="../src/assets/vuelogo.png"
+                            :src="vue"
                         />
                         vue3</n-a
                     >+
@@ -46,7 +53,7 @@
                         <n-avatar
                             class="logo"
                             size="small"
-                            src="../src/assets/pinalogo.svg"
+                            :src="pinna"
                         />
                         pinia</n-a
                     >
@@ -54,7 +61,7 @@
                         <n-avatar
                             class="logo"
                             size="small"
-                            src="../src/assets/vitelogo.svg"
+                            :src="vite"
                         />
                         vite</n-a
                     >
@@ -65,7 +72,7 @@
                         <n-avatar
                             class="logo"
                             size="small"
-                            src="../src/assets/naivelogo.svg"
+                            :src="navei"
                         />Naive UI</n-a
                     >
                     代码就随便看看，多提提宝贵意见，这个项目也是随手一写

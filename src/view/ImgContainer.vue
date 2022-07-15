@@ -1,63 +1,69 @@
 <template>
     <!-- 图片列表 -->
-    <div class="index-wrapper">
-        <div v-show="images.length === 0" class="not-found">
-            <div class="title">暂无图片</div>
-            <div class="message">你可以点击左侧的上传图片按钮进行上传。</div>
-            <n-space vertical>
-                <n-button
-                    @click="OpenUploadModel()"
-                    type="primary"
-                    style="width: 120px; margin: 10px auto"
-                    >上传图片</n-button
-                >
-                <n-button
-                    @click="DeleteFolder"
-                    type="error"
-                    :loading="deleteFolder_loading"
-                    style="width: 120px; margin: 0 auto"
-                    >删除文件夹</n-button
-                >
-            </n-space>
-        </div>
-
-        <div v-show="images.length > 0" class="list">
-            <div v-for="item in images" :key="`${item.name}`" class="item">
-                <div @click="DeleteImage(item)" class="del"></div>
-                <a
-                    class="image"
-                    :data-info="FormatWImageInfo(item)"
-                    :href="item.cdn_url"
-                    data-fancybox="gallery"
-                >
-                    <img :src="item.cdn_url" loading="lazy" alt=""
-                /></a>
-                <div class="info">
-                    <div class="name">{{ item.name }}</div>
-                    <div class="copy-box">
-                        <n-tag
-                            class="copy-btn"
-                            v-bind:data-clipboard-text="
-                                GetMarkdownText(item.cdn_url || '')
-                            "
-                            @click="CopyText()"
-                            >markdown</n-tag
-                        ><n-tag
-                            class="copy-btn"
-                            v-bind:data-clipboard-text="
-                                GetCdnText(item.cdn_url || '')
-                            "
-                            @click="CopyText()"
-                            >cdn</n-tag
-                        >
+    <n-spin :show="imagesList_loading">
+        <div class="index-wrapper">
+            <div
+                v-show="images.length === 0 && !imagesList_loading"
+                class="not-found"
+            >
+                <div class="title">暂无图片</div>
+                <div class="message">
+                    你可以点击左侧的上传图片按钮进行上传。
+                </div>
+                <n-space vertical>
+                    <n-button
+                        @click="OpenUploadModel()"
+                        type="primary"
+                        style="width: 120px; margin: 10px auto"
+                        >上传图片</n-button
+                    >
+                    <n-button
+                        @click="DeleteFolder"
+                        type="error"
+                        :loading="deleteFolder_loading"
+                        style="width: 120px; margin: 0 auto"
+                        >删除文件夹</n-button
+                    >
+                </n-space>
+            </div>
+            <div v-show="images.length > 0" class="list">
+                <div v-for="item in images" :key="`${item.name}`" class="item">
+                    <div @click="DeleteImage(item)" class="del"></div>
+                    <a
+                        class="image"
+                        :data-info="FormatWImageInfo(item)"
+                        :href="item.cdn_url"
+                        data-fancybox="gallery"
+                    >
+                        <img :src="item.cdn_url" loading="lazy" alt=""
+                    /></a>
+                    <div class="info">
+                        <div class="name">{{ item.name }}</div>
+                        <div class="copy-box">
+                            <n-tag
+                                class="copy-btn"
+                                v-bind:data-clipboard-text="
+                                    GetMarkdownText(item.cdn_url || '')
+                                "
+                                @click="CopyText()"
+                                >markdown</n-tag
+                            ><n-tag
+                                class="copy-btn"
+                                v-bind:data-clipboard-text="
+                                    GetCdnText(item.cdn_url || '')
+                                "
+                                @click="CopyText()"
+                                >cdn</n-tag
+                            >
+                        </div>
                     </div>
                 </div>
             </div>
+            <div v-if="images.length > 0" class="footer">
+                共 {{ images.length }} 张图
+            </div>
         </div>
-        <div v-if="images.length > 0" class="footer">
-            共 {{ images.length }} 张图
-        </div>
-    </div>
+    </n-spin>
 </template>
 <script setup lang="ts">
 import { GetFileSize, CopyText } from '@/util/util';
@@ -80,7 +86,10 @@ const infoStore = useInfoStore();
 watch(
     () => route.params.name,
     (folderName: any) => {
-        GetImages(folderName);
+        console.log(folderName);
+        if (!!folderName) {
+            GetImages(folderName);
+        }
     },
 );
 watch(
@@ -92,6 +101,8 @@ watch(
 let images = ref([] as reposImgInterface[]);
 let files = ref([] as any);
 let imagesList_loading = ref(false);
+let deleteFolder_loading = ref(false);
+
 onMounted(() => {
     if (infoStore.userInfo.login) {
         GetImages(route.params.name as string);
@@ -135,8 +146,6 @@ const isAssetTypeAnImage = (imgName: string) => {
     return arr.indexOf(ext.toLowerCase()) >= 0;
 };
 
-let deleteFolder_loading = ref(false);
-
 const DeleteFolder = () => {
     if (files.value[0]?.name == 'init') {
         deleteFolder_loading.value = true;
@@ -162,7 +171,6 @@ const DeleteFolder = () => {
 
 const DeleteImage = (item: reposImgInterface) => {
     imagesList_loading.value = true;
-
     axios
         .delete({
             url: `/repos/${infoStore.userInfo.login}/${infoStore.repos.name}/contents/${route.params.name}/${item.name}`,
@@ -176,7 +184,7 @@ const DeleteImage = (item: reposImgInterface) => {
             GetImages(route.params.name as string);
         })
         .finally(() => {
-            imagesList_loading.value = true;
+            imagesList_loading.value = false;
         });
 };
 
@@ -314,18 +322,10 @@ defineExpose({
                     opacity: 0;
                     transition: all 0.1s;
                     .copy-btn {
-                        //padding: 2px 6px;
-                        //border-radius: 4px;
-                        margin: 0px 3px;
-                        //height: 20px;
-                        //line-height: 20px;
-                        //background: #18a058;
-                        //color: #fff;
-                        //border: var(--border-width) #18a058 solid;
+                        margin: 0 3px;
                     }
                     .copy-btn:hover {
                         cursor: pointer;
-                        //border: var(--border-width) #36ad6a solid;
                         background: #36ad6a;
                         color: #fff;
                     }

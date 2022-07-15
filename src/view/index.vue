@@ -22,7 +22,7 @@
                             {{ item.title }}
                         </n-button>
                         <n-divider></n-divider>
-                        <div v-show="folders.length === 0">
+                        <div v-show="folders.length === 0 && !scroll_loading">
                             <n-descriptions
                                 label-placement="top"
                                 title="这啥都没有"
@@ -254,7 +254,6 @@ const changeImageModel = () => {
         return;
     }
 
-    // isOpenImageModal.value = !isOpenImageModal.value;
     infoStore.updateModelType(!infoStore.getModelType());
 };
 

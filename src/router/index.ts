@@ -17,17 +17,18 @@ const routes: Array<RouteRecordRaw> = [
         meta: {},
     },
     {
+        path: '/about',
+        name: 'About',
+        component: About,
+        meta: {},
+    },
+    {
         path: '/folder/:name',
         name: 'ImgContainer',
         component: ImgContainer,
         meta: {},
-    },
-    {
-      path: '/About',
-      name: 'About',
-      component: About,
-      meta: {},
-    },
+    }
+
 ];
 const router = createRouter({
     history: createWebHashHistory(''),
