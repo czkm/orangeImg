@@ -86,7 +86,6 @@ const infoStore = useInfoStore();
 watch(
     () => route.params.name,
     (folderName: any) => {
-        console.log(folderName);
         if (!!folderName) {
             GetImages(folderName);
         }

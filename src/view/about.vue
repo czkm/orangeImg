@@ -1,10 +1,5 @@
 <script setup lang="ts">
-import me from '../assets/me.jpeg'
-import vue from '../assets/vuelogo.png'
-import pinna from '../assets/pinalogo.svg'
-import vite from '../assets/vitelogo.svg'
-import navei from '../assets/naivelogo.svg'
-
+import {GetAssetsFile} from "@/util/util";
 </script>
 
 <template>
@@ -19,7 +14,7 @@ import navei from '../assets/naivelogo.svg'
                     class="meAvatar"
                     round
                     size="large"
-                    :src="me"
+                    :src="GetAssetsFile('me.jpeg')"
                 />
                 czkm</n-a
             >
@@ -45,7 +40,7 @@ import navei from '../assets/naivelogo.svg'
                         <n-avatar
                             class="logo"
                             size="small"
-                            :src="vue"
+                            :src="GetAssetsFile('vuelogo.png')"
                         />
                         vue3</n-a
                     >+
@@ -53,7 +48,8 @@ import navei from '../assets/naivelogo.svg'
                         <n-avatar
                             class="logo"
                             size="small"
-                            :src="pinna"
+                            :src="GetAssetsFile('pinialogo.svg')"
+
                         />
                         pinia</n-a
                     >
@@ -61,7 +57,7 @@ import navei from '../assets/naivelogo.svg'
                         <n-avatar
                             class="logo"
                             size="small"
-                            :src="vite"
+                            :src="GetAssetsFile('vitelogo.svg')"
                         />
                         vite</n-a
                     >
@@ -72,7 +68,8 @@ import navei from '../assets/naivelogo.svg'
                         <n-avatar
                             class="logo"
                             size="small"
-                            :src="navei"
+                            :src="GetAssetsFile('naivelogo.svg')"
+
                         />Naive UI</n-a
                     >
                     代码就随便看看，多提提宝贵意见，这个项目也是随手一写

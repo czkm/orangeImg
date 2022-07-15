@@ -140,7 +140,12 @@ const isEmptyObj = (obj:Object)=>{
     return JSON.stringify(obj)==='{}'
 
 }
+// 获取assets静态资源
+const GetAssetsFile = (url: string) => {
+    return new URL(`../assets/${url}`, import.meta.url).href
+}
 export {
+    GetAssetsFile,
     GetMarkdownText,
     GetCdnText,
     isEmptyObj,

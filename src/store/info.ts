@@ -28,6 +28,12 @@ export const useInfoStore = defineStore({
         updateModelType(type: boolean) {
             this.modelType = type;
         },
+        getRepos(){
+            return  this.repos
+        },
+        getToken(){
+            return  this.github_token
+        },
         getModelType(){
             return  this.modelType
         }

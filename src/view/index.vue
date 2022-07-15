@@ -133,14 +133,7 @@
 <script setup lang="ts">
 import UploadModal from '@/components/uploadModal.vue';
 import { PersonOutline, Close } from '@vicons/ionicons5';
-import {
-    computed,
-    defineComponent,
-    onMounted,
-    reactive,
-    ref,
-    toRaw,
-} from 'vue';
+import { onMounted, reactive, ref, watch } from 'vue';
 import { reposImgInterface, UserOptionStrEnum } from '@/constant';
 import router from '@/router';
 import { useInfoStore } from '@/store/info';
@@ -150,29 +143,26 @@ import { GetDefData, isEmptyObj } from '@/util/util';
 const route = useRoute();
 
 const infoStore = useInfoStore();
-infoStore.$subscribe((mutation: any, state) => {
-    if (mutation.events.key === 'repos' && state.repos.id) {
+watch(
+    () => infoStore.getRepos(),
+    (value: any) => {
         getFolders();
-    }
-    if (mutation.events.key === 'github_token') {
-        hasToken.value = state.github_token !== '';
-    }
-});
+    },
+);
+watch(
+    () => infoStore.getToken(),
+    (value: string) => {
+        hasToken.value = value !== '';
+    },
+);
 onMounted(() => {
     if (infoStore.repos && infoStore.userInfo) {
         GetDefData(infoStore);
     }
 });
 
-const userOptions = [
-    {
-        label: '个人信息',
-        key: UserOptionStrEnum.INFO,
-    },
-];
 const hasToken = ref(false);
 let folders = ref([] as any);
-let isOpenImageModal = ref(false);
 let isAddModal = ref(false);
 let addFolder_loading = ref(false);
 let scroll_loading = ref(false);
