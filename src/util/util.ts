@@ -1,74 +1,5 @@
-// import Moment from 'moment'
-// import axios from 'axios';
 // @ts-ignore
 import Clipboard from 'clipboard';
-
-/**
- * 人性化时间处理 传入国际时间格式
- */
-// function GetBeautifyTime(date) {
-//   var newdate = Moment(date).format('yyyy-MM-DD HH:mm:ss')
-//   var timestamp = new Date(newdate).getTime()
-//   var mistiming = Math.round(new Date().getTime() / 1000) - timestamp / 1000
-//   var postfix = mistiming > 0 ? '前' : '后'
-//
-//   mistiming = Math.abs(mistiming)
-//   var arrr = ['年', '个月', '星期', '天', '小时', '分钟', '秒']
-//   var arrn = [31536000, 2592000, 604800, 86400, 3600, 60, 1]
-//   for (var i = 0; i < 7; i++) {
-//     var inm = Math.floor(mistiming / arrn[i])
-//     if (inm != 0) {
-//       return inm + ' ' + arrr[i] + postfix
-//     }
-//   }
-// }
-
-/**
- * 人性化时间处理 传入国际时间格式
- */
-// function GetDate(date:string) {
-//   return Moment(date).format('yyyy年MM月DD日 HH:mm:ss')
-// }
-
-/**
- * 得到文件的扩展名
- * @param {} filename
- */
-function GetFileExt(filename: string) {
-    const d = /\.[^]+$/.exec(filename);
-    const ext = String(d);
-    const s = ext.toLowerCase();
-    return s;
-}
-
-/**
- * 得到纯数字时间
- * @param {}
- */
-function GetNowTimeNum() {
-    const nowTime: Date = new Date();
-    const year: number = nowTime.getFullYear();
-    const month: number = nowTime.getMonth() + 1;
-    const day: number = nowTime.getDate();
-    const hour: number = nowTime.getHours();
-    const minutes: number = nowTime.getMinutes();
-    const seconds: number = nowTime.getSeconds();
-
-    let hourStr: string = '';
-    let minutesStr: string = '';
-    let secondsStr: string = '';
-
-    if (hour <= 9) {
-        hourStr = '0' + hour.toString();
-    }
-    if (minutes <= 9) {
-        minutesStr = '0' + minutes.toString();
-    }
-    if (seconds <= 9) {
-        secondsStr = '0' + seconds.toString();
-    }
-    return year + month + day + hourStr + minutesStr + secondsStr;
-}
 
 function GetFileSize(size: number) {
     //把字节转换成正常文件大小
@@ -148,11 +79,7 @@ export {
     GetMarkdownText,
     GetCdnText,
     isEmptyObj,
-    // GetBeautifyTime,
     GetDefData,
-    GetFileExt,
-    GetNowTimeNum,
-    // GetDate,
     GetFileSize,
     CopyText,
     FormatErrorMessage,

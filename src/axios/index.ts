@@ -21,7 +21,6 @@ class Request {
                 return config;
             },
             (error) => {
-                console.log(error);
                 //请求失败的拦截
                 return Promise.reject(error);
             },
@@ -33,7 +32,6 @@ class Request {
                 return response;
             },
             (error) => {
-                console.log(error.response.data.message);
                 window.$message.error(FormatErrorMessage(error.response.data.message),)
                 //响应失败的拦截
                 return Promise.reject(error);

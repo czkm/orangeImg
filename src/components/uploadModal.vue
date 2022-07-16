@@ -257,11 +257,9 @@ onMounted(() => {
         );
     }
     // 拖拽接听
-    let drop_area: any = document.getElementById('drop-area');
+    let drop_area: Document = document.getElementById('drop-area');
     drop_area.addEventListener('drop', DropUpload, false);
-
     let timer: any = '';
-
     drop_area.addEventListener('dragleave', (e: Event) => {
         clearTimeout(timer);
         timer = setTimeout(() => {
