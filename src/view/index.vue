@@ -133,7 +133,7 @@
 <script setup lang="ts">
 import UploadModal from '@/components/uploadModal.vue';
 import { PersonOutline, Close } from '@vicons/ionicons5';
-import { onMounted, reactive, ref, watch } from 'vue';
+import { onMounted, reactive, ref, toRaw, watch } from 'vue';
 import { reposImgInterface, UserOptionStrEnum } from '@/constant';
 import router from '@/router';
 import { useInfoStore } from '@/store/info';
@@ -146,7 +146,9 @@ const infoStore = useInfoStore();
 watch(
     () => infoStore.getRepos(),
     (value: any) => {
-        getFolders();
+        if (!isEmptyObj(value)) {
+            getFolders();
+        }
     },
 );
 watch(

@@ -136,14 +136,13 @@ const GetCdnText = (url: string) => {
     return ` ${url}`;
 };
 
-const isEmptyObj = (obj:Object)=>{
-    return JSON.stringify(obj)==='{}'
-
-}
+const isEmptyObj = (obj: Object): boolean => {
+    return JSON.stringify(obj) === '{}';
+};
 // 获取assets静态资源
 const GetAssetsFile = (url: string) => {
-    return new URL(`../assets/${url}`, import.meta.url).href
-}
+    return new URL(`../assets/${url}`, import.meta.url).href;
+};
 export {
     GetAssetsFile,
     GetMarkdownText,

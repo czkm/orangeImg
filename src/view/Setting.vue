@@ -13,14 +13,11 @@
             >
                 <n-descriptions label-placement="top">
                     <n-descriptions-item>
-                        <template  #label>
-                            <n-a
-                                :href="getAccessBlogUrl"
-                                target="_blank"
-                            >
+                        <template #label>
+                            <n-a :href="getAccessBlogUrl" target="_blank">
                                 如何获取access token？
                             </n-a>
-                        </template >
+                        </template>
                         <n-text depth="3">
                             access token
                             只会储存在你的本机的浏览器内，清空缓存则需要重新登陆
@@ -54,7 +51,7 @@
                 </n-tag>
                 <n-descriptions label-placement="top" v-show="!!description">
                     <n-descriptions-item>
-                        <template > 项目描述 </template>
+                        <template> 项目描述 </template>
                         {{ description }}
                     </n-descriptions-item>
                 </n-descriptions>
@@ -108,8 +105,8 @@ import { GetDefData } from '@/util/util';
 let confirm_loading = ref(false);
 let select_loading = ref(false);
 const infoStore = useInfoStore();
-const demoTokenStr = 'ghp_KnpQsBY4htJmiU'
-const demoTokenEnd =     '94O29PJpzfhwZWan3JYjgU';
+const demoTokenStr = 'ghp_KnpQsBY4htJmiU';
+const demoTokenEnd = '94O29PJpzfhwZWan3JYjgU';
 const demoRepoId = 510652790;
 const getAccessBlogUrl = 'https://zhuanlan.zhihu.com/p/541405087';
 const settingForm = ref({
@@ -165,6 +162,10 @@ const setTag = () => {
     description.value = repos?.description || '';
 };
 const SetToken = () => {
+    if (!settingForm.value.tokenValue) {
+        window.$message.error('token不能为空');
+        return;
+    }
     localStorage.setItem('github_token', settingForm.value.tokenValue);
     infoStore.updateToken(settingForm.value.tokenValue);
     GetUser();
@@ -218,10 +219,20 @@ const GetRepos = () => {
             const localRepos = JSON.parse(
                 localStorage.getItem('repos') || '{}',
             );
-            if (localRepos.id) {
+
+            const isRepsId = reposOptions.value.find(
+                (item: reposInterface) => item.id == localRepos.id,
+            );
+            console.log(isRepsId);
+
+            // 有历史记录且 存在id
+            if (localRepos.id && !!isRepsId) {
                 settingForm.value.repoId = localRepos.id;
                 Save(false);
+            } else {
+                settingForm.value.repoId = null;
             }
+            select_loading.value = false;
         })
         .finally(() => {
             select_loading.value = false;
