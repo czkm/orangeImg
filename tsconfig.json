@@ -4,6 +4,7 @@
       "node_modules/@types", // 默认值
       "src/types"
     ],
+    "noImplicitAny": false,
     "target": "esnext",
     "useDefineForClassFields": true,
     "module": "esnext",

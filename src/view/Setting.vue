@@ -106,7 +106,7 @@ import { computed, onMounted, ref, watch } from 'vue';
 import { TimerOutline, Help, CheckmarkOutline } from '@vicons/ionicons5';
 import { useInfoStore } from '@/store/info';
 import { GetDefData } from '@/util/util';
-import { Guide } from '../components/Guide/index.js';
+import { CommonGuide } from '../components/Guide/index';
 import { nextTick } from 'vue';
 
 let confirm_loading = ref(false);
@@ -174,8 +174,7 @@ const showGuide = () => {
         title: '获取Access Token',
         content: '不知道怎么获取的话就来点这个url吧'
     }];
-
-    Guide(guidePages, 'isGuide');
+    CommonGuide(guidePages, 'isGuide');
 };
 const getCurrentReposInfo = () => {
     return reposOptions.value.find(

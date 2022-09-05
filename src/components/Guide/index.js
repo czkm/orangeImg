@@ -14,7 +14,7 @@ import $ from 'jquery'
  *
  * */
 
-var Guide = function(data, localStorageKey) {
+var CommonGuide = function(data, localStorageKey) {
     // 遍历生成新的数据源
     var isShowGuidePage =  localStorage.getItem('isGuide')
     if (isShowGuidePage === 'true' && !(data.length > 0)) return;     // 已显示过引导页,或者引导页数没有
@@ -34,4 +34,4 @@ var Guide = function(data, localStorageKey) {
     }, 50);
 };
 
-export {Guide};
+export {CommonGuide};
