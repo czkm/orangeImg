@@ -20,7 +20,8 @@
         "pinia": "^2.0.13",
         "unplugin-vue-components": "^0.19.3",
         "vue": "^3.2.16",
-        "vue-router": "4.0.8"
+        "vue-router": "4.0.8",
+        "jquery": "3.5.1"
     },
     "devDependencies": {
         "@types/clipboard": "^2.0.7",

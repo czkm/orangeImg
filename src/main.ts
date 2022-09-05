@@ -3,6 +3,7 @@ import App from './App.vue';
 import store from './store';
 import naive from 'naive-ui';
 import router from '@/router';
+
 import './assets/css/var.scss'
 import './assets/css/reset.scss'
 import './assets/css/main.scss'
@@ -12,7 +13,6 @@ import 'vfonts/Lato.css';
 import 'vfonts/FiraCode.css';
 // 创建vue实例
 const app = createApp(App);
-
 app.use(store);
 app.use(router);
 app.use(naive);

@@ -78,7 +78,7 @@ import {GetAssetsFile} from "@/util/util";
             <br />待办事项<br />
             <ul>
                 <li>黑夜模式</li>
-                <li>更友好的使用指引</li>
+                <del>更友好的使用指引(已完成)</del>
                 <li>国际化处理</li>
                 <li>适配移动端</li>
                 <li>样式优化</li>
@@ -97,7 +97,7 @@ import {GetAssetsFile} from "@/util/util";
                     >PicHub</n-a
                 >
             </div>
-            <div>欢迎提建议和bug，喜欢的话点个star！</div>
+            <div style="padding-bottom: 20px">欢迎提建议和bug，喜欢的话点个star！</div>
         </div>
     </div>
 </template>

@@ -6,6 +6,7 @@
         </div>
         <n-space vertical>
             <n-form
+                id="messageForm"
                 ref="formRef"
                 :model="settingForm"
                 label-placement="top"
@@ -14,7 +15,11 @@
                 <n-descriptions label-placement="top">
                     <n-descriptions-item>
                         <template #label>
-                            <n-a :href="getAccessBlogUrl" target="_blank">
+                            <n-a
+                                :href="getAccessBlogUrl"
+                                target="_blank"
+                                id="getAccessToken"
+                            >
                                 如何获取access token？
                             </n-a>
                         </template>
@@ -101,6 +106,8 @@ import { computed, onMounted, ref, watch } from 'vue';
 import { TimerOutline, Help, CheckmarkOutline } from '@vicons/ionicons5';
 import { useInfoStore } from '@/store/info';
 import { GetDefData } from '@/util/util';
+import { Guide } from '../components/Guide/index.js';
+import { nextTick } from 'vue';
 
 let confirm_loading = ref(false);
 let select_loading = ref(false);
@@ -149,7 +156,27 @@ onMounted(() => {
         userInfo.value = JSON.parse(localStorage.getItem('userInfo') as string);
         GetRepos();
     }
+    nextTick(() => {
+        showGuide();
+    });
 });
+const showGuide = () => {
+    var isShowGuidePage = localStorage.getItem('isGuide');
+    if (isShowGuidePage === 'true') return;     // 已显示过引导页
+
+    var guidePages = [{
+
+        selector: '#messageForm',
+        title: '配置信息',
+        content: '需要先填好相关的信息才能继续哦'
+    }, {
+        selector: '#getAccessToken',
+        title: '获取Access Token',
+        content: '不知道怎么获取的话就来点这个url吧'
+    }];
+
+    Guide(guidePages, 'isGuide');
+};
 const getCurrentReposInfo = () => {
     return reposOptions.value.find(
         (item: reposInterface) => item.id == settingForm.value.repoId,
