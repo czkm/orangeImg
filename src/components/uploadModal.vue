@@ -386,7 +386,8 @@ const Upload = async (type: ImgUploadTypeEnum) => {
                                 ImgUploadStatusEnum.SUCCESS;
                             e.url = image.url;
                             e.download_url = image.download_url;
-                            e.cdn_url = `https://git.poker/${infoStore.userInfo.login}/${infoStore.repos.name}/blob/main/${route.params.name}/${image.name}?raw=true`;
+                            e.cdn_url = `https://cdn.jsdelivr.net/gh/${infoStore.userInfo.login}/${infoStore.repos.name}@master/${route.params.name}/${image.name}`;
+                            // e.cdn_url = `https://git.poker/${infoStore.userInfo.login}/${infoStore.repos.name}/blob/main/${route.params.name}/${image.name}?raw=true`;
                             e.git_url = image.git_url;
                             e.sha = image.sha;
                             e.upload_type = type;

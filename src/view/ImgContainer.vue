@@ -124,8 +124,8 @@ const GetImages = (folderPath: string) => {
             files.value = res.data;
             res.data.forEach((img: reposImgInterface) => {
                 if (img.download_url) {
-                    // img.cdn_url = `https://cdn.jsdelivr.net/gh/${infoStore.userInfo.login}/${infoStore.repos.name}@master/${folderPath}/${img.name}`;
-                    img.cdn_url = `https://git.poker/${infoStore.userInfo.login}/${infoStore.repos.name}/blob/main/${folderPath}/${img.name}?raw=true`;
+                    img.cdn_url = `https://cdn.jsdelivr.net/gh/${infoStore.userInfo.login}/${infoStore.repos.name}@master/${folderPath}/${img.name}`;
+                    // img.cdn_url = `https://git.poker/${infoStore.userInfo.login}/${infoStore.repos.name}/blob/main/${folderPath}/${img.name}?raw=true`;
                 }
             });
             images.value = res.data.filter((img: reposImgInterface) =>
