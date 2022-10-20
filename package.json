@@ -7,7 +7,7 @@
         "serve": "vite preview",
         "lint": "eslint src",
         "lint:fix": "eslint src --fix --ext .ts,.tsx",
-        "deploy":"sh deploy.sh"
+        "deploy": "sh deploy.sh"
     },
     "dependencies": {
         "@vicons/ionicons5": "^0.12.0",
@@ -16,12 +16,12 @@
         "clipboard": "2.0.4",
         "compressorjs": "^1.1.1",
         "esbuild": "^0.14.44",
+        "jquery": "3.5.1",
         "moment": "^2.29.1",
         "pinia": "^2.0.13",
         "unplugin-vue-components": "^0.19.3",
         "vue": "^3.2.16",
-        "vue-router": "4.0.8",
-        "jquery": "3.5.1"
+        "vue-router": "4.0.8"
     },
     "devDependencies": {
         "@types/clipboard": "^2.0.7",
@@ -39,6 +39,7 @@
         "qs": "^6.10.1",
         "sass": "^1.42.1",
         "typescript": "^4.4.3",
+        "vfonts": "^0.0.3",
         "vite": "^2.6.0",
         "vue-tsc": "^0.3.0"
     }

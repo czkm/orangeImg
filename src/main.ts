@@ -9,7 +9,7 @@ import './assets/css/reset.scss'
 import './assets/css/main.scss'
 // 通用字体
 import 'vfonts/Lato.css';
-// 等宽字体
+// // 等宽字体
 import 'vfonts/FiraCode.css';
 // 创建vue实例
 const app = createApp(App);
